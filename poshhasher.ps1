@@ -53,11 +53,43 @@ else
 {
     if (![string]::IsNullOrWhiteSpace($file))
     {
-        
+        if ($hashType -eq 'Both') 
+        {
+            if ((Get-FileHash -Algorithm SHA256 -Path $file).Hash -eq $search) 
+            {
+                Write-Host "$($file) matched SHA256 hash"
+            }
+            elseif ((Get-FileHash -Algorithm MD5 -Path $file).Hash -eq $search)
+            {
+                Write-Host "$($file) matched MD5 hash"
+            }
+            else
+            {
+                Write-Host "$($file) did not match hash provided"
+            }
+        }
+        else 
+        {
+            if ((Get-FileHash -Algorithm $hashType -Path $file).Hash -eq $search)
+            {
+                Write-Host "$($file) matched $($hashType) hash"
+            }
+            else 
+            {
+                Write-Host "$($file) did not match hash provided"
+            }
+        }
     }
     elseif (![string]::IsNullOrWhiteSpace($folder))
     {
-    
+        if ($hashType -eq 'Both') 
+        {
+            
+        }
+        else 
+        {
+            
+        }
     }
     else 
     {
